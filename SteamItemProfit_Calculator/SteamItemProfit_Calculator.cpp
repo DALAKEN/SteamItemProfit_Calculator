@@ -64,17 +64,17 @@ class ProfitCalc
 
 			cout << "\n ---- STEAM ----\n\n";
 
-			cout << " " << _marketPrice << _money << "PRICE ANY MARKET\n\n";
-			cout << " " << _steamPrice << _money << "PRICE STEAM\n\n";
+			cout << " " << _marketPrice << _money << "ANY MARKET PRICE \n\n";
+			cout << " " << _steamPrice << _money << "STEAM PRICE \n\n";
 
 			CommissionSteam(_steamPrice);
 
-			cout << " " << _steamPrice << _money << "13% COMMISSION STEAM\n\n";
-			cout << " " << _steamPrice - _marketPrice << _money << "money PROFIT\n\n";
+			cout << " " << _steamPrice << _money << "STEAM COMMISSION (13%)\n\n";
+			cout << " " << _steamPrice - _marketPrice << _money << "PROFIT (MONEY)\n\n";
 
 			cout << " ---------------\n\n ";
 
-			cout << DifferencePercentages(_steamPrice, _marketPrice) << " %\tPROFIT\n";
+			cout << DifferencePercentages(_steamPrice, _marketPrice) << " %\tPROFIT (PERCENT)\n";
 		}
 
 	private:
