@@ -1,63 +1,56 @@
 ﻿#include <iostream>
 
-using namespace std;
+using std::cout;
+using std::cin;
 
-class SteamCalc
+class ProfitCalc
 {
 	public:
 
-		SteamCalc()
+		ProfitCalc()
 		{
 			_steamPrice = 0;
 			_marketPrice = 0;
+			_result = 0;
 			_money = "\tUSD\t";
 		}
 
-		void number_format(double& num) {
+		void FormatNumber(double& num) {
 
 			int a = num;
 			double b = int((num - a) * 100) / (double)100;
 
 			num = a + b;
 		}
-		void Steam_commission(double& _steamPrice) {
+		void CommissionSteam(double& _steamPrice) {
 
 			double STEAM_PRC = 13;
-			double result = _steamPrice - (_steamPrice * STEAM_PRC / 100);
+			double commissionResult = _steamPrice - (_steamPrice * STEAM_PRC / 100);
 
-			number_format(result);
-			_steamPrice = result;
+			FormatNumber(commissionResult);
+			_steamPrice = commissionResult;
 		}
-		double prc_diff(double& a, double& b, double result = 0) {
+		double DifferencePercentages(double& a, double& b) {
 
-			// Разница в процентах: a < b = ((b - a) / a) * 100 || a > b = ((a - b) / a) * 100 
+			// Difference in percentages: a < b = ((b - a) / a) * 100 || a > b = ((a - b) / a) * 100 
 
-			if (a > b) result = ((a - b) / a) * 100;
-			else result = 0;
+			if (a > b) _result = ((a - b) / a) * 100;
+			else _result = 0;
 
-			number_format(result);
+			FormatNumber(_result);
 
-			return result;
+			return _result;
 		}
-		void ShowSteamProfit() {
+		void ShowMenu()
+		{
+			do
+			{
+				InputPrice();
+				ShowSteamProfit();
 
-			system("cls");
-
-			cout << "\n ---- STEAM ----\n\n";
-
-			cout << " " << _marketPrice << _money << "PRICE ANY MARKET\n" << endl;
-			cout << " " << _steamPrice << _money << "PRICE STEAM\n" << endl;
-
-			Steam_commission(_steamPrice);
-
-			cout << " " << _steamPrice << _money << "13% COMMISSION STEAM\n" << endl;
-			cout << " " << _steamPrice - _marketPrice << _money << "money PROFIT\n" << endl;
-
-			cout << " ---------------\n\n ";
-
-			cout << prc_diff(_steamPrice, _marketPrice) << " %\tPROFIT" << endl;
+			} while (true);
 		}
-		void input_price() {
+		void InputPrice() {
 
 			cout << "\n ENTER ANY MARKET PRICE\t> ";
 			cin >> _marketPrice;
@@ -65,27 +58,38 @@ class SteamCalc
 			cout << " ENTER STEAM PRICE\t> ";
 			cin >> _steamPrice;
 		}
+		void ShowSteamProfit() {
+
+			system("cls");
+
+			cout << "\n ---- STEAM ----\n\n";
+
+			cout << " " << _marketPrice << _money << "PRICE ANY MARKET\n\n";
+			cout << " " << _steamPrice << _money << "PRICE STEAM\n\n";
+
+			CommissionSteam(_steamPrice);
+
+			cout << " " << _steamPrice << _money << "13% COMMISSION STEAM\n\n";
+			cout << " " << _steamPrice - _marketPrice << _money << "money PROFIT\n\n";
+
+			cout << " ---------------\n\n ";
+
+			cout << DifferencePercentages(_steamPrice, _marketPrice) << " %\tPROFIT\n";
+		}
 
 	private:
 
 		double _steamPrice;
 		double _marketPrice;
+		double _result;
 		const char* _money;
 };
 
 int main() 
 {
-
-	SteamCalc steamCalc;
-	steamCalc.ShowSteamProfit();
-
-	do 
-	{
-		steamCalc.input_price();
-		steamCalc.ShowSteamProfit();
-
-	}
-	while(true);
+	ProfitCalc *profitCalc = new ProfitCalc;
+	profitCalc->ShowSteamProfit();
+	profitCalc->ShowMenu();
 
 	return 0;
 }
